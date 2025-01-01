@@ -166,11 +166,12 @@ Short help :
         --help             : show full help
         -v                 : show program's version
     
-    Ex. : prog.py -u finance-depart-bucket -u finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst -s@
-                  -o ren_invoices_2025_Jan.log -k 3600 -w
+    Ex. : prog.py -b finance-depart-bucket  -r customer_invoices/2025/01 -i rename.lst -s@ -o ren_invoices_2025_Jan.log
+                  -k 3600 -w
     
-      Process files in s3://finance-depart-bucket/customer_invoices/2025/01/ (-b/-r) that haven't changed for 1h (-k) overwrting existing
-      files (if any, -w) and trace all operations to "ren_invoices_2025_Jan.log" (-o)
+      Process files in s3://finance-depart-bucket/customer_invoices/2025/01/ (-b/-r) that haven't changed for 1h (-k) 
+      overwrting existing files (if any, -w) and trace all operations to "ren_invoices_2025_Jan.log" (-o)
+
 ### Example use
 The example at the end of the short help above comes from a new argument `example_use` to `ArgumentParser` :
 ```python
@@ -191,11 +192,11 @@ This can take a little trial and error until you get the exact format you want, 
 
 It is worth it though, to get a pretty usage example. Compare neatly indented usage :
 
-    Ex. : prog.py -u finance-depart-bucket -u finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst -s@
+    Ex. : prog.py -b finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@
                   -o ren_invoices_2025_Jan.log -k 3600 -w
 to
 
-    Ex. : prog.py -u finance-depart-bucket -u finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst -s@
+    Ex. : prog.py -b finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@
     -o ren_invoices_2025_Jan.log -k 3600 -w
 
 ---------------
