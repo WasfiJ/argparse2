@@ -58,7 +58,7 @@ You can additionnaly provide a `max_use_err` string to lecture the user about al
 ### Smarter `ArgumentDefaultsHelpFormatter`
 If the help string you provide already talks about defaults (containes "default " or `%(default)s`), no default indication is appended.
 ```python
-impoert argparse2 as argparse
+import argparse2 as argparse
 MAX_AGE = 40 # seconds
 ...
 parser = argparse.ArgumentParser(.., formatter_class=argparse.ArgumentQualifHelpFormatter, ..) # or ArgumentDefaultsHelpFormatter
