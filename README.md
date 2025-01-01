@@ -50,7 +50,7 @@ If it makes sence, any option can be limited from appearing multiple times on th
 ```python
 parser.add_argument('-b', '--bucket', .. , max_use_count=1, max_use_err='\n  Please provide one single S3 bucket !\n' )
 ```
-Default is 0. Only positive integers allowed.
+Default is 0 (disabled). Only positive integers allowed.
 
 You can additionnaly provide a `max_use_err` string to lecture the user about all the evils of his redundant behaviour.
 
