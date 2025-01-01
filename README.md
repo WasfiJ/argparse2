@@ -1,5 +1,5 @@
 # argparse2
-Enhanced argparse (argument parsing for Python)
+Enhanced argparse (argument parsing for Python).
 
 This is a modified argparse from [CPython](https://github.com/python/cpython "CPython") (2025.01.01) with added features.
 
@@ -46,7 +46,7 @@ Here you already see a few new features :
 Keep reading !
 
 ## Options used more than once
-If it makes sence, any option can be limited from appearing multiple times on the command line now via the new argument `max_use_count` :
+If it makes sense, any option can be limited from appearing multiple times on the command line now via the new argument `max_use_count` :
 ```python
 parser.add_argument('-b', '--bucket', .. , max_use_count=1, max_use_err='\n  Please provide one single S3 bucket !\n' )
 ```
