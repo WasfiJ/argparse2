@@ -153,7 +153,7 @@ Short help :
 
     $ python prog.py  -h
     
-      Usage : aws_mass_mv.py -b <Bucket> -r <root_folder> -i <input_file> [<input_file> ...] [-s <char>] [-w] [-k <max_seconds>]
+      Usage : prog.py -b <Bucket> -r <root_folder> -i <input_file> [<input_file> ...] [-s <char>] [-w] [-k <max_seconds>]
                          [-o <output_file>] [-h] [--help] [-v]
 
         -b <Bucket>        : set S3 bucket.
