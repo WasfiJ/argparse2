@@ -71,6 +71,7 @@ Formatted help : because default is described in the help string, no '(default :
      ...
     -k, --skip-recent <max_seconds>
                             Recommended. Default is to skip files modified less than 40s ago.
+Also : if default of is of type file, for stdin/out/err (at least !), you don't end up with a thorny `(default : class '_io.TextIOWrapper' ..)` but with a clear and concise `(default : stdout)`.
 
 The "Recommended" indication was added automatically because this formatter was enhanced into a new one :
 
@@ -98,7 +99,7 @@ This has been isolated into a new `raw_description` argument :
 This separates how description & help strings are formatted.
 
 ### Forced line breaks
-Even with `RawTextHelpFormatter`, you help string with line breaks :
+Even with `RawTextHelpFormatter`, your help string with line breaks :
 ```python
 parser.add_argument('-k', .. , help='Default is to skip files modified less than %ds ago.\
 If set : skip files not older than <max_seconds> seconds. Adjust to your specific situation.\
@@ -185,7 +186,7 @@ Ex. : %(prog)s@FI@ -b finance-depart-bucket -r customer_invoices/2025/01 -i rena
 ```
 This new argument is formatted exactly like help strings, and enjoys the forced line breaks with the help of `@NL@` tags + one more special tag : `@FI@` that you can customize like this : `argparse.ArgumentParser(.. , indent_pick='@IndentHere@', .. )` (inserted after `%(prog)s` in the example above).
 
-The effect of `@FI@` (FI for Following Indent) : all following lines shall be indented to this position (where the tag appears).
+The effect of `@FI@` (Following Indent) : all following lines shall be indented to this position (where the tag appears).
 
 This effect ceases at the first `@NL@` encountered ! (so you can regain some control)
 
