@@ -167,7 +167,7 @@ Short help :
         --help             : show full help
         -v                 : show program's version
     
-    Ex. : prog.py -b finance-depart-bucket  -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@ 
+    Ex. : prog.py -b finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@ 
                   -o ren_invoices_2025_Jan.log -k 3600 -w
     
       Process files in s3://finance-depart-bucket/customer_invoices/2025/01/ (-b/-r) that haven't changed for 1h (-k) overwrting 
@@ -200,6 +200,15 @@ to
 
     Ex. : prog.py -b finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@
     -o ren_invoices_2025_Jan.log -k 3600 -w
+Also : the formatter tries to take a hint from an initial indentation at the beginning of the first line or just after an `@NL@` tag :
+```python
+argparse.ArgumentParser( .. , example_use='''
+...
+@NL@
+  Process files ...
+''', .. )
+```
+Notice how the indentation of 'Process files .. ' is preserved in the formatted output above.
 
 ---------------
 
