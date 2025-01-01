@@ -140,7 +140,7 @@ add_argument('-h', action='short_help', .. )
 ```
 This new action consumes a new argument called `desc` :
 ```python
-# Provides 'desc' strings (these can be %(help)s if help string is short enough) :
+# Provide 'desc' strings (these can be %(help)s if help string is short enough) :
 add_argument('-b', '--bucket', required=True, nargs=1, action='extend', help='Set S3 bucket.', desc='%(help)s', .. )
 add_argument('-r', '--root', required=True, nargs=1, action='store', help='Set root folder on S3.', desc='%(help)s', .. )
 ...
@@ -198,5 +198,9 @@ to
     Ex. : prog.py -u finance-depart-bucket -u finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst -s@
     -o ren_invoices_2025_Jan.log -k 3600 -w
 
+---------------
 
+This is published under [Python License](https://github.com/python/cpython/blob/main/LICENSE "Strikethrough").
+
+Please open an issue for any encountered bugs, or report to wj.osprojects@gmail.com
 
