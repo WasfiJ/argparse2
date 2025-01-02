@@ -710,7 +710,7 @@ class HelpFormatter(object):
         # Delay its import for speeding up the common usage of argparse.
         import textwrap
         ret = []
-        for p in text.split('@NL@') :
+        for p in text.split(self.NL) :
             for line in textwrap.wrap(p.strip(), width) : ret.append(line)
         return ret
 
@@ -719,9 +719,12 @@ class HelpFormatter(object):
             return ''.join(indent + line for line in text.splitlines(keepends=True))
         text = self._whitespace_matcher.sub(' ', text).strip()
         import textwrap
-        return textwrap.fill(text, width,
+        ret = ''
+        for p in text.split(self.NL) :
+            ret += textwrap.fill(p, width,
                              initial_indent=indent,
-                             subsequent_indent=indent)
+                             subsequent_indent=indent) +'\n'
+        return ret
 
     def _get_help_string(self, action):
         return action.help
@@ -789,7 +792,10 @@ class ArgumentQualifHelpFormatter(HelpFormatter):
         if help is None:
             help = ''
         
-        no_options_nor_args = not ( action.option_strings  or  action.nargs in [OPTIONAL, ZERO_OR_MORE] )
+        no_options_nor_args = not ( 
+               action.option_strings
+           or  action.nargs in [OPTIONAL, ZERO_OR_MORE] 
+        )
         
         if action.default is SUPPRESS or no_options_nor_args :
             return help
@@ -1295,7 +1301,7 @@ class _HelpAction(Action):
         parser.print_help()
         parser.exit()
 
-class _ShortHelpAction(_HelpAction):
+class _ShortHelpAction(Action):
     
   def __init__(self,
                option_strings,
@@ -1307,6 +1313,7 @@ class _ShortHelpAction(_HelpAction):
           option_strings=option_strings,
           dest=dest,
           default=default,
+          nargs=0,
           help=help, desc=desc,
           deprecated=deprecated)
 
