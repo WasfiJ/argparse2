@@ -866,7 +866,7 @@ class ArgumentError(Exception):
     information about the argument that caused it.
     """
 
-    def __init__(self, argument, message, sep=''):
+    def __init__(self, argument, message, sep=': '):
         self.argument_name = _get_action_name(argument)
         self.message = message
         self.sep = sep
@@ -2322,8 +2322,8 @@ class ArgumentParser(_AttributeHolder, _ActionsContainer):
                     if start_index+1 < arg_strings_count :
                         lastOptStr += ' '+arg_strings[start_index+1]
                     if option_counts[opt1] > action.max_use_count :
-                        if action.max_use_err : 
-                            errmsg = '\n\n  ' + action.max_use_err.strip() + '\n'
+                        if action.max_use_err.strip() : 
+                            errmsg = '\n\n  ' + action.max_use_err.strip()
                         else : errmsg = '\n'
                         errmsg = ' :\n\n     '+lastOptString[opt1] \
                                    + '\n     '+lastOptStr \
@@ -2891,7 +2891,7 @@ class ArgumentParser(_AttributeHolder, _ActionsContainer):
         should either exit or raise an exception.
         """
         self.print_usage(_sys.stderr)
-        self.exit(2, _('%s: %s\n') %(self.error_tag,message))
+        self.exit(2, _('%s: %s\n\n') %(self.error_tag,message))
 
     def _warning(self, message):
         args = {'prog': self.prog, 'message': message}
