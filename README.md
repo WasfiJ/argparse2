@@ -11,6 +11,7 @@ On to the good stuff :
 * [Clearer error message formatting](#clearer-error-message-formatting)
 * [Options used more than once](#options-used-more-than-once)
 * [Help formatting customization](#help-formatting-customization)
+  + [Custom `width`](#custom-width)
   + [Smarter `ArgumentDefaultsHelpFormatter`](#smarter--argumentdefaultshelpformatter-)
   + [A new `ArgumentQualifHelpFormatter`](#a-new--argumentqualifhelpformatter-)
   + [`RawDescriptionHelpFormatter` replaced with `raw_description=True`](#-rawdescriptionhelpformatter--replaced-with--raw-description-true-)
@@ -55,6 +56,11 @@ Default is 0 (disabled). Only positive integers allowed.
 You can additionnaly provide a `max_use_err` string to lecture the user about all the evils of his redundant behaviour.
 
 ## Help formatting customization
+### Custom `width`
+argparse sets width automatically based on terminal width.
+
+If you want a custom width, you can use new argument `width` : `argparse.ArgumentParser(.., width=132, ..)` without exceeding terminal width.
+
 ### Smarter `ArgumentDefaultsHelpFormatter`
 If the help string you provide already talks about defaults (containes "default " or `%(default)s`), no default indication is appended.
 ```python
@@ -88,6 +94,8 @@ parser.add_argument('-k', .. , recommend=True, .. )
     -k, --skip-recent <max_seconds>
                             Recommended. Default is to skip files modified less than 40s ago.
 This new `formatter_class` supports the `recommend` argument with the existing `required` one, and help strings are qualified accordingly.
+
+An argument cannot be declared required and recommended at the same time !
 
 Now, how can you enjoy these stellar enhancements if you want a raw description (provided by `RawDescriptionHelpFormatter`) at the same time ?
 
