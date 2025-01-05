@@ -177,7 +177,6 @@ class HelpFormatter(object):
         
         import shutil
         w = shutil.get_terminal_size().columns - 2
-        w=189
         if width is None or width > w : width = w
 
         self._prog = prog
