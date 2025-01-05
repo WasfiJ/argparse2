@@ -1665,6 +1665,10 @@ class _ActionsContainer(object):
         if not callable(action_class):
             raise ValueError('unknown action "%s"' % (action_class,))
         action = action_class(**kwargs)
+        
+        if action.recommend and action.required :
+            raise ValueError( _('argument declared required and recommended at the same time: %s')
+                              % _get_action_name(action) )
 
         # raise an error if the action type is not callable
         type_func = self._registry_get('type', action.type, action.type)
@@ -1768,9 +1772,6 @@ class _ActionsContainer(object):
         # make sure required is not specified
         if 'required' in kwargs:
             msg = _("'required' is an invalid argument for positionals")
-            raise TypeError(msg)
-        if 'recommend' in kwargs:
-            msg = _("'recommend' is an invalid argument for positionals")
             raise TypeError(msg)
 
         # mark positional arguments as required if at least one is
