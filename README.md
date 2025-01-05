@@ -77,7 +77,7 @@ Formatted help : because default is described in the help string, no '(default :
      ...
     -k, --skip-recent <max_seconds>
                             Recommended. Default is to skip files modified less than 40s ago.
-Also : if default of is of type file, for stdin/out/err (at least !), you don't end up with a thorny `(default : class '_io.TextIOWrapper' ..)` but with a clear and concise `(default : stdout)`.
+Also : if default is of type file, for stdin/out/err (at least !), you don't end up with a thorny `(default : class '_io.TextIOWrapper' ..)` but with a clear and concise `(default : stdout)`.
 
 The "Recommended" indication was added automatically because this formatter was enhanced into a new one :
 
