@@ -62,7 +62,7 @@ argparse sets width automatically based on terminal width.
 If you want a custom width, you can use new argument `width` : `argparse.ArgumentParser(.., width=132, ..)` without exceeding terminal width.
 
 ### Smarter `ArgumentDefaultsHelpFormatter`
-If the help string you provide already talks about defaults (containes "default " or `%(default)s`), no default indication is appended.
+If the help string you provide already talks about defaults (contains "default " or `%(default)s`), then no default indication is appended.
 ```python
 import argparse2 as argparse
 MAX_AGE = 40 # seconds
