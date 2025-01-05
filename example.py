@@ -1,5 +1,5 @@
 
-# Example usage for argparse2
+# Example use for argparse2
 
 import argparse2 as argparse
 
