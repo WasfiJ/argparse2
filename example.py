@@ -147,4 +147,4 @@ def print_global_entities(collection):
 
 print_global_entities(('bucket','s3RootDir','NoClobber','MIN_AGE','sep','outF', 'inputs'))
 
-raise SystemExit(2)
+raise SystemExit(0)
