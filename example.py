@@ -24,8 +24,7 @@ Args= {
   'i' : { opts: ['-i', '-in', '--input'],            dest: 'input',   meta: '<input_file>',  nargs: '+', required: True               },
   's' : { opts: ['-s', '--separator'],               dest: 'sep',     meta: '<char>',        nargs: 1,   default: [sep]               },
   # Behaviour                                                                                                          
-  'k' : { opts: ['-k', '--skip-recent'],             dest: 'age',     meta: '<seconds>',     nargs: 1,   recommend: True,
-          default: [MIN_AGE], typ: int },
+  'k' : { opts: ['-k', '--skip-recent'],             dest: 'age',     meta: '<seconds>',     nargs: 1,   recommend: True,  default: [MIN_AGE], typ: int },
   'w' : { opts: ['-w', '--overwrite', '--clobber'],  dest: 'clobber',      action: 'store_true'                                       },
   # Misc                                                                                                                             
   'o' : { opts: ['-o', '-out', '--out'],             dest: 'outF',    meta: '<output_file>', nargs: 1                                 },
