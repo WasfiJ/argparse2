@@ -90,11 +90,11 @@ Input format : (parsed as UTF-8)
 '''
 
 example_use='''
-Ex. : %(prog)s@FI@ -u finance-depart-bucket -u finance-depart-bucket -r customer_invoices/2025/01
-                   -i rename1.lst rename2.lst -s@ -o ren_invoices_2025_Jan.log -k 3600 -w
+Ex. : %(prog)s@FI@ -b finance-depart-bucket -r customer_invoices/2025/01 -i rename1.lst rename2.lst -s@
+                   -o ren_invoices_2025_Jan.log -k 3600 -w
 @NL@
-  Process files in s3://finance-depart-bucket/customer_invoices/2025/01/ (-b/-r) as per rename1.lst & rename2.lst (-i) that 
-  haven't changed for 1h (-k) overwrting existing files (if any, -w) and trace all operations to "ren_invoices_2025_Jan.log" (-o)
+  Process files in s3://finance-depart-bucket/customer_invoices/2025/01/ (-b/-r) as per rename1.lst & rename2.lst (-i) with @ separator (-s)
+  that haven't changed for 1h (-k) overwrting existing files (if any, -w) and trace all operations to "ren_invoices_2025_Jan.log" (-o)
 '''
 
 # Helper function
