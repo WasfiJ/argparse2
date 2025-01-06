@@ -107,7 +107,7 @@ def add_argument(parser, opts) :
       if arg in d : kwArgs[arg] = d[arg]
     d = Args[opt]
     if action in d : kwArgs[action] = d[action]
-    else : kwArgs[action] = A
+    else : kwArgs[action] = default_action
     for arg in [dest, nargs, required, recommend, deprecated, default, typ, meta] :
       if arg in d : kwArgs[arg] = d[arg]
     parser.add_argument( *d['opts'], **kwArgs )
