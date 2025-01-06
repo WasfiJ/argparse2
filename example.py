@@ -99,7 +99,7 @@ Ex. : %(prog)s@FI@ -b finance-depart-bucket -r customer_invoices/2025/01 -i rena
 
 # Helper function
 def add_argument(parser, opts) :
-  global A
+  global default_action
   for opt in opts :
     kwArgs = {}
     d = ArgTexts[opt]
@@ -118,7 +118,7 @@ parser = argparse.ArgumentParser(prog=prog, add_help=False, description=descript
  epilog="Please report any issues to wj.osprojects@gmail.com"  
 )
 
-A = 'extend' # default action for all arguments
+default_action = 'extend' # default action for all arguments
 add_argument( parser.add_argument_group('== Remote location '), ['b','r'] )
 add_argument( parser.add_argument_group('== Input '),           ['i','s'] )
 add_argument( parser.add_argument_group('== Behaviour '),       ['w','k'] )
