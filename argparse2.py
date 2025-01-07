@@ -537,9 +537,10 @@ class HelpFormatter(object):
                     
         parts = [action_header]
         if action.desc and action.desc.strip():
-            help_text = self._expand_text(action,'desc')
+            help_text = self._expand_text(action,'desc').strip()
             if help_text:
                 help_text = help_text[:1].lower() + help_text[1:]
+                if not help_text.endswith('..') : help_text = help_text.rstrip('.')
                 help_lines = self._split_lines(help_text, help_width)
                 parts.append('%*s%s\n' % (indent_first, '', help_lines[0]))
                 for line in help_lines[1:]:
