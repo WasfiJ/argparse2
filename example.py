@@ -3,7 +3,7 @@
 
 import argparse2 as argparse
 
-__ver = '0.6'; __lupdate = '2022.01.05'
+__ver = '0.6'; __lupdate = '2025.01.08'
 
 sep = '§'
 NoClobber = True
@@ -16,18 +16,18 @@ action='action'; opts='opts'; dest='dest'; meta='metavar'; desc='desc'; help='he
 nMax='max_use_count'; nMaxErr='max_use_err'; required='required'; recommend='recommend'; deprecated='deprecated'; default='default'
 
 # General setup
-Args= { 
+Args= {
   # Remote location
-  'b' : { opts: ['-b', '--bucket'],                  dest: 'bucket',  meta: '<Bucket>',      nargs: 1,   required: True               },
-  'r' : { opts: ['-r', '--root'],                    dest: 'root',    meta: '<root_folder>', nargs: 1,   required: True               },
-  # Input                                                                                                                            
-  'i' : { opts: ['-i', '-in', '--input'],            dest: 'input',   meta: '<input_file>',  nargs: '+', required: True               },
-  's' : { opts: ['-s', '--separator'],               dest: 'sep',     meta: '<char>',        nargs: 1,   default: [sep]               },
-  # Behaviour                                                                                                          
-  'k' : { opts: ['-k', '--skip-recent'],             dest: 'age',     meta: '<seconds>',     nargs: 1,   recommend: True,  default: [MIN_AGE], typ: int },
-  'w' : { opts: ['-w', '--overwrite', '--clobber'],  dest: 'clobber',      action: 'store_true'                                       },
-  # Misc                                                                                                                             
-  'o' : { opts: ['-o', '-out', '--out'],             dest: 'outF',    meta: '<output_file>', nargs: 1                                 },
+  'b' : { opts: ['-b', '--bucket'],                  dest: 'bucket',  meta: '<Bucket>',      required: True                                },
+  'r' : { opts: ['-r', '--root'],                    dest: 'root',    meta: '<root_folder>', required: True                                },
+  # Input
+  'i' : { opts: ['-i', '-in', '--input'],            dest: 'input',   meta: '<input_file>',  required: True, nargs: '+', action : 'extend' },
+  's' : { opts: ['-s', '--separator'],               dest: 'sep',     meta: '<char>',        default: sep                                  },
+  # Behaviour
+  'k' : { opts: ['-k', '--skip-recent'],             dest: 'age',     meta: '<seconds>',     recommend: True, default: MIN_AGE, typ: int   },
+  'w' : { opts: ['-w', '--overwrite', '--clobber'],  dest: 'clobber',      action: 'store_true'                                            },
+  # Misc
+  'o' : { opts: ['-o', '-out', '--out'],             dest: 'outF',    meta: '<output_file>'                                                },
 
    'h' : { opts: ['-h'],                     action: 'short_help' },
   'hh' : { opts: ['--help', '--full-help'],  action: 'help'       },
@@ -36,31 +36,33 @@ Args= {
 
 # Help/desc strings (and custom error messages)
 ArgTexts = {
-  'b' : { desc: '%(help)s', help: 'Set S3 bucket.',
+  'b' : { help: 'Set S3 bucket.', desc: '%(help)s',
           nMax: 1, nMaxErr: '\n  Please provide one single S3 bucket !'  },
-  
-  'r' : { desc: '%(help)s', help: 'Set root folder on S3.' },
-  
+
+  'r' : { help: 'Set root folder on S3.', desc: '%(help)s',
+          nMax: 1, nMaxErr: '\n  Please provide one single root folder !' },
+
   'i' : { desc: "list of input files or '-' for stdin", help:"'-' for stdin or a list of files (which will be processed in order)." },
-  
-  's' : { desc: '%(help)s', help: "Replace default separator '"+sep+"' with <char>.",
+
+  's' : { help: "Replace default separator '"+sep+"' with <char>.", desc: '%(help)s',
           nMax: 1, nMaxErr: '\n  Please provide one single separator for input data !\n'  },
-  
+
   'w' : { desc: 'overwrite existing target files.',
-          help: 'Default : no overwrite (skip existing target files).@NL@If set : overwrite an existing [dstFileName] (at your own risks !).' }, 
-  
-  'k' : { desc: 'set minimal age (in seconds) for files to be processed.', 
+          help: 'Default : no overwrite (skip existing target files).@NL@If set : overwrite an existing [dstFileName] (at your own risks !).' },
+
+  'k' : { desc: 'set minimal age (in seconds) for files to be processed.',
           help:'Default is to skip files modified less than %ds ago.@NL@\
           If set : skip files not older than <max_seconds> seconds. Adjust to your specific situation.@NL@\
           Set to 0 to disable (at your own risks !). Note that even in this case if ETag changes\
-          during the copy operation, the file will still be skipped (it is being actively modified !).' %MIN_AGE },
-  
-  'o' : { desc: '%(help)s', help: "Set an output file (default is stdout/stderr).",
+          during the copy operation, the file will still be skipped (it is being actively modified !).' %MIN_AGE,
+          nMax: 1, nMaxErr: '\n  Please provide one single \'-k\' option : maximum age for files (in seconds) !\n'  },
+
+  'o' : { help: "Set an output file (default is stdout/stderr).", desc: '%(help)s',
           nMax: 1, nMaxErr: '\n  Please provide one single output target !\n'         },
-  
+
    'h' : { desc: 'show this help message', help: 'Show short help message and exit.' },
   'hh' : { desc: 'show full help',         help: 'Show this help message and exit.' },
-   'v' : { desc: "show program's version", help: "Show program's version number and exit.", 
+   'v' : { desc: "show program's version", help: "Show program's version number and exit.",
            version: '%(prog)s v'+__ver+' ('+__lupdate+')@NL@Please report any issues to wj.osprojects@gmail.com'   }
 }
 
@@ -98,7 +100,6 @@ Ex. : %(prog)s@FI@ -b finance-depart-bucket -r customer_invoices/2025/01 -i rena
 
 # Helper function
 def add_arguments(parser, opts) :
-  global default_action
   for opt in opts :
     kwArgs = {}
     d = ArgTexts[opt]
@@ -106,7 +107,6 @@ def add_arguments(parser, opts) :
       if arg in d : kwArgs[arg] = d[arg]
     d = Args[opt]
     if action in d : kwArgs[action] = d[action]
-    else : kwArgs[action] = default_action
     for arg in [dest, nargs, required, recommend, deprecated, default, typ, meta] :
       if arg in d : kwArgs[arg] = d[arg]
     parser.add_argument( *d['opts'], **kwArgs )
@@ -117,7 +117,6 @@ parser = argparse.ArgumentParser(prog=prog, add_help=False, description=descript
  epilog="Please report any issues to wj.osprojects@gmail.com"  
 )
 
-default_action = 'extend' # default action for all arguments
 add_arguments( parser.add_argument_group('== Remote location '), ['b','r'] )
 add_arguments( parser.add_argument_group('== Input '),           ['i','s'] )
 add_arguments( parser.add_argument_group('== Behaviour '),       ['w','k'] )
@@ -126,12 +125,9 @@ add_arguments( parser.add_argument_group('== Misc. '),           ['o','h','hh','
 args = parser.parse_args()
 
 # -b finance-depart-bucket -r customer_invoices/2025/01 -i rename.lst rename1.lst rename2.lst -s@ -w
-#   bucket=['finance-depart-bucket'], 
-#   root=['customer_invoices/2025/01'], 
-#   input=['rename.lst', 'rename1.lst', 'rename2.lst'],
-#   sep=['§', '@'],
-#   clobber=True,
-#   age=[40], outF=None
+#   bucket='finance-depart-bucket',  root='customer_invoices/2025/01'
+#   input=['rename.lst', 'rename1.lst', 'rename2.lst']
+#   sep='@',   clobber=True,   age=40,   outF=None
 bucket = args.bucket[0]
 s3RootDir = args.root[0]
 if args.sep and len(args.sep)>1 : sep = args.sep[1]     # len > 1 because there is a default
